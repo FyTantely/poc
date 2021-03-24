@@ -24,8 +24,8 @@ public class UserPrincipalDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) {
-        UserAuthentification user = userRepository.findByLogin(login);
+    public UserDetails loadUserByUsername(String mail) {
+        UserAuthentification user = userRepository.findByMail(mail);
 
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(user.getMail(), user.getPassword(), user.getAuthorities());

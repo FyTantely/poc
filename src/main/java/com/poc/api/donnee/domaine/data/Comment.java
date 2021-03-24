@@ -29,5 +29,11 @@ public class Comment {
 	private Vehicule vehicule;
 	private String commentData;
 	private Date dateComment;
+	
+	public Comment() {
+		super();
+	}
+	
+	
 
 }

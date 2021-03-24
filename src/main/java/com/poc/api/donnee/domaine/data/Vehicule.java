@@ -47,4 +47,16 @@ public class Vehicule {
 		}
 	}
 
+	public Vehicule() {
+	}
+
+	public Vehicule(String model, String mark, byte[] picture) {
+		super();
+		this.model = model;
+		this.mark = mark;
+		this.picture = picture;
+	}
+
+	
+
 }

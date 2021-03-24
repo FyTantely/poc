@@ -30,13 +30,27 @@ public class UserAuthentification implements Serializable, UserDetails {
     private String login;
     private String password;
     private String mail;
+    private String roleName;
     @OneToMany(mappedBy = "userauthentification")
 	Set<Comment> comment;
     
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		List<GrantedAuthority> authorities = new ArrayList<>();
+
+        this.getRoleList().forEach(r -> {
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r);
+            authorities.add(authority);
+        });
+        return authorities;
 	}
+	
+	public List<String> getRoleList(){
+        if(this.roleName.length() > 0){
+            return Arrays.asList(this.roleName.split(","));
+        }
+        return new ArrayList<>();
+    }
 
 	
 	@Override
@@ -44,6 +58,11 @@ public class UserAuthentification implements Serializable, UserDetails {
 		// TODO Auto-generated method stub
 		return this.password;
 	}
+	
+	public void setUsername(String mail) {
+		this.mail = mail;
+	}
+	
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
@@ -70,11 +89,12 @@ public class UserAuthentification implements Serializable, UserDetails {
 		return false;
 	}
 
-	public UserAuthentification(String mail, String login, String password) {
+	public UserAuthentification(String mail, String login, String password, String roleName) {
 		super();
 		this.login = login;
 		this.password = password;
 		this.mail = mail;
+		this.roleName = roleName;
 	}
 
 	public UserAuthentification() {

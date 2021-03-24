@@ -2,7 +2,9 @@ package com.poc.api.commun.utils.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import com.poc.api.donnee.domaine.data.UserAuthentification;
@@ -13,7 +15,7 @@ public class UserMapperImpl implements UserMapper {
 
 	@Override
 	public UserDTO userToDto(UserAuthentification user) {
-		if (user == null) {
+		if (Objects.isNull(user)) {
 			return null;
 		}
 		
@@ -27,7 +29,7 @@ public class UserMapperImpl implements UserMapper {
 
 	@Override
 	public UserAuthentification DtoToUser(UserDTO userDto) {
-		if (userDto == null) {
+		if (Objects.isNull(userDto)) {
 			return null;
 		}
 		
@@ -41,7 +43,7 @@ public class UserMapperImpl implements UserMapper {
 
 	@Override
 	public List<UserDTO> individustoDtos(List<UserAuthentification> userAuthentifications) {
-		if (userAuthentifications == null) {
+		if (CollectionUtils.isEmpty(userAuthentifications)) {
 			return null;
 		}
 		

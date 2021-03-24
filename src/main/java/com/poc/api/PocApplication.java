@@ -1,6 +1,10 @@
 package com.poc.api;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import com.poc.api.donnee.domaine.data.*;
 import com.poc.api.service.repository.UserRepository;
+import com.poc.api.service.repository.VehiculeRepository;
 
 @Configuration
 @EnableAutoConfiguration
@@ -32,6 +37,9 @@ public class PocApplication {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	VehiculeRepository vehiculeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PocApplication.class, args);
@@ -40,8 +48,16 @@ public class PocApplication {
 	@PostConstruct
     public void initAll() {
 
-		/*UserAuthentification userAdmin = new UserAuthentification("admin@admin.com","admin",  passwordEncoder.encode("1432"));
-        userRepository.save(userAdmin);*/
+		userRepository.deleteAll();
+		UserAuthentification userAdmin = new UserAuthentification("admin@admin.com","admin",  passwordEncoder.encode("1432"), "admin");
+        userRepository.save(userAdmin);
+        
+        vehiculeRepository.deleteAll();
+        List<Vehicule> vehicule = Stream.of(
+                new Vehicule("Trafic", "Renault", null),
+                new Vehicule("Gratour", "Foton", null)).collect(Collectors.toList());
+        vehiculeRepository.saveAll(vehicule);
+        
 	}
 
 }

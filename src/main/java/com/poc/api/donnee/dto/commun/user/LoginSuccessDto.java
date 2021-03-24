@@ -7,10 +7,10 @@ public class LoginSuccessDto extends CommunErrorDTO {
 	private String token;
     private UserDTO data;
 
-    public LoginSuccessDto(String code, String message, String token, UserDTO userLogin) {
+    public LoginSuccessDto(String code, String message, String token, UserDTO userLogin, boolean success) {
         this.setCode(code);
         this.setMessage(message);
-        this.setSuccess(true);
+        this.setSuccess(success);
         this.setWarning(false);
         this.setToken(token);
         this.setData(userLogin);
