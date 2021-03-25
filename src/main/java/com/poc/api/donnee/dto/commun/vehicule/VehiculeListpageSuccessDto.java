@@ -32,24 +32,5 @@ public class VehiculeListpageSuccessDto extends CommunErrorDTO {
         this.setItems(items);
     }
     
-    @Override
-    public String getCode() {
-        return this.code;
-    }
-
-    @Override
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    @Override
-    public String getMessage() {
-        return this.message;
-    }
-
-    @Override
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
 }

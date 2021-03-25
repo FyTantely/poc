@@ -11,13 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class VehiculeDTO {
-	@JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer id;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String model;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String mark;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private byte[] picture;
     
 	public VehiculeDTO() {

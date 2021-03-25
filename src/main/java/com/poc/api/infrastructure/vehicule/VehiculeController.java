@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.poc.api.commun.utils.mapper.VehiculeMapper;
 import com.poc.api.donnee.dto.commun.vehicule.VehiculeListpageSuccessDto;
+import com.poc.api.donnee.dto.commun.vehicule.VehiculeSuccessDto;
+import com.poc.api.donnee.dto.data.vehicule.VehiculeDTO;
 import com.poc.api.service.applicatif.crud.vehicule.VehivuleSA;
 
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +46,16 @@ public class VehiculeController {
 			e.printStackTrace();
             return new ResponseEntity<>(new VehiculeListpageSuccessDto(0, 0, 0, 0, new ArrayList<>(), "500", "Internal Error", "ERROR"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+	
+	@ApiOperation(value = "Affichage véhicule par id")
+    @GetMapping(value = "/findVehiculeById")
+    public ResponseEntity<VehiculeSuccessDto> findVehiculeById(@RequestParam(defaultValue = "") int id) {
+        VehiculeDTO vehiculeDTO = vehiculeSA.findById(id);
+        if (Objects.isNull(vehiculeDTO)) {
+            return new ResponseEntity<>(new VehiculeSuccessDto(null, "403", "Vehicule NOT FOUND", "FAILED"), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new VehiculeSuccessDto(vehiculeDTO, "200", "Succesfully done", "SUCCESS"), HttpStatus.OK);
     }
 
 }

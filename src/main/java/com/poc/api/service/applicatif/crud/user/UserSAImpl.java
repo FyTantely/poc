@@ -1,5 +1,7 @@
 package com.poc.api.service.applicatif.crud.user;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class UserSAImpl implements UserSA {
 	@Override
 	public UserDTO findUserByMail(String mail) {
 		UserAuthentification user = userRepository.findByMail(mail);
-        if (user != null) {
+        if (!Objects.isNull(user)) {
             return userMapper.userToDto(user);
         }
         return null;

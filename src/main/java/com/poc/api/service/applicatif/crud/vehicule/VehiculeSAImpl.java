@@ -1,6 +1,8 @@
 package com.poc.api.service.applicatif.crud.vehicule;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.poc.api.commun.utils.mapper.VehiculeMapper;
 import com.poc.api.donnee.domaine.data.Vehicule;
 import com.poc.api.donnee.dto.commun.vehicule.VehiculeListpageSuccessDto;
+import com.poc.api.donnee.dto.data.vehicule.VehiculeDTO;
 import com.poc.api.service.repository.VehiculeRepository;
 
 @Service
@@ -29,6 +32,16 @@ public class VehiculeSAImpl implements VehivuleSA {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public VehiculeDTO findById(Integer id) {
+		Optional<Vehicule> vehicule = vehiculeRepository.findById(id);
+        if (vehicule.isPresent()) {
+            return vehicuelMapper.vehiculeToDto(vehicule.get());
+        } else {
+            return null;
+        }
 	}
 	
 }

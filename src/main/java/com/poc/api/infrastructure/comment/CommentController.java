@@ -8,12 +8,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poc.api.commun.utils.mapper.CommentMapper;
 import com.poc.api.donnee.dto.commun.comment.CommentListpageSuccessDto;
+import com.poc.api.donnee.dto.commun.comment.CommentSuccessDto;
+import com.poc.api.donnee.dto.data.comment.CommentDTO;
 import com.poc.api.service.applicatif.crud.comment.CommentSA;
 
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +49,14 @@ public class CommentController {
 			e.printStackTrace();
             return new ResponseEntity<>(new CommentListpageSuccessDto(0, 0, 0, 0, new ArrayList<>(), "500", "Internal Error", "ERROR"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+	
+	@ApiOperation(value = "Ajout commentaire pour une vehicule")
+    @PostMapping( "/addComment")
+    public ResponseEntity<CommentSuccessDto>  addComment(@RequestBody CommentDTO commentDto) throws Exception {
+		CommentDTO commentAdd= commentSA.addComment(commentDto);
+        
+        return new ResponseEntity<>(new CommentSuccessDto(commentAdd, "200", "Succesfully done", "SUCCESS"), HttpStatus.OK);
     }
 
 }

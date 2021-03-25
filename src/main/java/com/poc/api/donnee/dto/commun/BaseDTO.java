@@ -9,25 +9,12 @@ import lombok.Setter;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public abstract class BaseDTO {
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private boolean isError = false;
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private boolean isInfo = false;
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private boolean isWarning = false;
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String uuid;
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String errorCode = null;
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String errorMessagedeString = null;
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String message = null;
 	
 	public BaseDTO() {

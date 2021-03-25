@@ -55,37 +55,28 @@ public class UserAuthentification implements Serializable, UserDetails {
 	
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.password;
 	}
 	
-	public void setUsername(String mail) {
-		this.mail = mail;
-	}
 	
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.mail;
 	}
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

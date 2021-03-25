@@ -3,6 +3,11 @@ package com.poc.api.donnee.dto.commun.user;
 import com.poc.api.donnee.dto.commun.CommunErrorDTO;
 import com.poc.api.donnee.dto.data.user.UserDTO;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class LoginSuccessDto extends CommunErrorDTO {
 	private String token;
     private UserDTO data;
@@ -16,19 +21,4 @@ public class LoginSuccessDto extends CommunErrorDTO {
         this.setData(userLogin);
     }
     
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public UserDTO getData() {
-        return data;
-    }
-
-    public void setData(UserDTO data) {
-        this.data = data;
-    }
 }

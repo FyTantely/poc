@@ -1,17 +1,33 @@
 package com.poc.api.commun.utils.mapper;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.poc.api.donnee.domaine.data.Comment;
+import com.poc.api.donnee.domaine.data.UserAuthentification;
+import com.poc.api.donnee.domaine.data.Vehicule;
 import com.poc.api.donnee.dto.data.comment.CommentDTO;
+import com.poc.api.service.repository.UserRepository;
+import com.poc.api.service.repository.VehiculeRepository;
 
 @Component
 public class CommentMapperImpl implements CommentMapper {
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	VehiculeRepository vehiculeRepository;
 
 	@Override
 	public CommentDTO commentToDto(Comment comment) {
@@ -21,10 +37,17 @@ public class CommentMapperImpl implements CommentMapper {
 		
 		CommentDTO commentDTO = new CommentDTO();
 		commentDTO.setId(comment.getId());
-		commentDTO.setUserauthentification(comment.getUserauthentification());
-		commentDTO.setVehicule(comment.getVehicule());
+		commentDTO.setIdUser(comment.getUserauthentification().getId());
+		commentDTO.setIdVehicule(comment.getVehicule().getId());
 		commentDTO.setCommentData(comment.getCommentData());
-		commentDTO.setDateComment(comment.getDateComment());
+		
+		try {
+			LocalDate dateComment = Instant.ofEpochMilli(comment.getDateComment().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			commentDTO.setDateComment(LocalDate.parse(dateComment.format(formatter), formatter));
+		}catch (Exception e) {
+			commentDTO.setDateComment(LocalDate.now());
+		}
 		return commentDTO;
 	}
 
@@ -36,10 +59,22 @@ public class CommentMapperImpl implements CommentMapper {
 		
 		Comment comment = new Comment();
 		comment.setId(commentDto.getId());
-		comment.setUserauthentification(commentDto.getUserauthentification());
-		comment.setVehicule(commentDto.getVehicule());
+		Optional<UserAuthentification> user = userRepository.findById(commentDto.getIdUser());
+		if(user.isPresent()) {
+			comment.setUserauthentification(user.get());
+		}
+		
+		Optional<Vehicule> vehicule = vehiculeRepository.findById(commentDto.getIdVehicule());
+		if(vehicule.isPresent()) {
+			comment.setVehicule(vehicule.get());
+		}
+		
 		comment.setCommentData(commentDto.getCommentData());
-		comment.setDateComment(commentDto.getDateComment());
+		try {
+			comment.setDateComment(Date.from(commentDto.getDateComment().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		}catch (Exception e) {
+			comment.setDateComment(new Date());
+		}
 		return comment;
 	}
 
