@@ -40,7 +40,7 @@ public class UserController {
 
     @Autowired
     UserMapper userMapper;
-   
+       
     @CrossOrigin
     @ApiOperation(value = "Login")
     @PostMapping("/signin")
@@ -57,6 +57,5 @@ public class UserController {
         }
         
     }
-    
 
 }
