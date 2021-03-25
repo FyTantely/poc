@@ -1,5 +1,6 @@
 package com.poc.api.commun.config.webconfig;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.poc.api.commun.config.jwt.JwtFilter;
@@ -26,8 +29,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserPrincipalDetailsService userPrincipalDetailsService;
-
-
+    
+    @Autowired
+    private JwtFilter jwtFilter;
+    
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -39,9 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userPrincipalDetailsService);
     }
-
-    @Autowired
-    private JwtFilter jwtFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -58,6 +60,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+    @Bean
+    public TokenStore tokenStore() {
+        return new InMemoryTokenStore();
+    }
+    
 
 
 }
